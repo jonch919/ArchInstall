@@ -10,9 +10,9 @@
 # Enhancement ideas:
 #   - 
 #
-# Version history:
-# 0.1  Marco Tijbout:
-#   Initial release of the script.
+# Update history:
+# 20191224 Updated the sed command.
+# 20191221 0.1 Marco Tijbout: Initial version of the script.
 ################################################################################
 
 ################################################################################
@@ -67,8 +67,8 @@ cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.org
 
 # Add the mirror information to the top:
 echo -e "\n * Add Netherlands miror to top of mirrorlist ...\n"
-sed -i -e '6i## Netherlands\' /etc/pacman.d/mirrorlist
-sed -i -e '7iServer = http://ftp.nluug.nl/os/Linux/distr/archlinux/$repo/os/$arch\' /etc/pacman.d/mirrorlist
+sed -i '6i## Netherlands\' /etc/pacman.d/mirrorlist
+sed -i '7iServer = http://ftp.nluug.nl/os/Linux/distr/archlinux/$repo/os/$arch\' /etc/pacman.d/mirrorlist
 
 # Install essential packages:
 echo -e "\n * Install essential packages ...\n"
@@ -77,6 +77,10 @@ pacstrap /mnt base base-devel linux linux-firmware nano
 # Create FSTAB file
 echo -e "\n * Create fstab file ...\n"
 genfstab -U /mnt >> /mnt/etc/fstab
+
+################################################################################
+## CHROOT - INSTALLATION
+################################################################################
 
 # Prepare installation steps during chroot:
 echo -e "\n * Prep second stage in chroot ...\n"
@@ -151,12 +155,17 @@ echo -e "theiotcloud\ntheiotcloud" | passwd
 exit
 EOF
 
+# Make second installation script executable:
 echo -e "\n * Make second installation script executable ...\n"
 chmod +x /mnt/root/ArchInstallation2.sh
 
 # Switch to newly installed version and continue installation:
 echo -e "\n * Chroot and continue installation ...\n"
 arch-chroot /mnt /root/ArchInstallation2.sh
+
+################################################################################
+## END OF INSTALLATION
+################################################################################
 
 echo -e "\n * Back from chroot ...\n"
 
