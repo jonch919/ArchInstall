@@ -66,9 +66,9 @@ echo -e "\n * Backup mirrorlist ...\n"
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.org
 
 # Add the mirror information to the top:
-echo -e "\n * Add Netherlands miror to top of mirrorlist ...\n"
-sed -i '6i## Netherlands\' /etc/pacman.d/mirrorlist
-sed -i '7iServer = http://ftp.nluug.nl/os/Linux/distr/archlinux/$repo/os/$arch\' /etc/pacman.d/mirrorlist
+echo -e "\n * Add Sweden miror to top of mirrorlist ...\n"
+sed -i '6i## Sweden\' /etc/pacman.d/mirrorlist
+sed -i '7iServer = https://mirror.osbeck.com/archlinux/$repo/os/$arch\' /etc/pacman.d/mirrorlist
 
 # Install essential packages:
 echo -e "\n * Install essential packages ...\n"
@@ -108,7 +108,7 @@ cat <<EOF > /mnt/root/ArchInstallation2.sh
 ################################################################################
 ## CHROOT - INSTALLATION
 ################################################################################
-TARGET_MACHINE=archvm
+TARGET_MACHINE=p51archvm
 
 # Set the locale for the system:
 echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
@@ -120,7 +120,7 @@ locale-gen
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 
 # Set time zone to Europe Amsterdam:
-ln -sf /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime
+ln -sf /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
 
 # Set the time standard to UTC using command:
 hwclock --systohc --utc
@@ -149,7 +149,7 @@ grub-install --target=x86_64-efi --efi-directory=/boot
 grub-mkconfig -o /boot/grub/grub.cfg
 
 echo -e "\n * Set password for root ...\n"
-echo -e "theiotcloud\ntheiotcloud" | passwd
+echo -e "jonas\jultomten" | passwd
 
 # Exit this part of the script
 exit
